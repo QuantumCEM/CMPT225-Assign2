@@ -1,16 +1,17 @@
 /*
  * Queue.h (and Queue.cpp)
  * 
- * Class Description: A data collection ADT class to satisfy Assn 1's requiremetns.
+ * Class Description: A data collection ADT class to satisfy Assn 2's requiremetns.
  * Class invariants: FIFO or LILO  
  * Inspired on: June 18, 2016
- * Group: AC Soluctions
+ * Group: AC Solutions
  */
 
 #pragma once
 #include <string>
 #include "Event.h"
 #include "PQueue.h"
+#include "Node.h"
 
 using namespace std;
 
@@ -18,24 +19,17 @@ using namespace std;
 class Queue
 {
 private: 
-   int currentTime;
+   int currentTime;                    
    int maxNumberofEvents = 100;
+   int eventCount = 0;
    Event* events[maxNumberofEvents];
-   int eventCount[maxNumberofEvents];
+   int eventCount[eventCount];
 
 
 public:
 
+   // Default Constructor
    Queue();
-
-   //Copy Constructor, might not need
-   //Basically just copy assignment 1
-   //Queue(const Queue& rhs);
-
-   //Destructor
-   //Dont need, if not using copy constructor
-   //~Queue();
-
 
    // Description: Returns "true" is this queue is empty, otherwise "false".
    // Time Efficiency: O(1)
