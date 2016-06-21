@@ -17,13 +17,12 @@ using namespace std;
 // Default Constructor
 Queue::Queue()
 {
-
 	for (int index = 0; index < Queue::maxNumberofEvents; index++)
 	{
 		events[index] = NULL;
-		eventCount[index] = 0;
-		currentTime = 0;
 	}
+  eventCount = 0;
+  currentTime = 0;
 } // End default constructor
 
 // Destructor
@@ -50,7 +49,7 @@ bool enqueue(const Event& newElement){
   if (eventCount == 100){
     return false;
   }else{
-    events[eventCount++] = newElement;
+    events[eventCount] = newElement;
     eventCount++;
     currentTime++;
     return true;
@@ -83,7 +82,7 @@ bool dequeue(){
 Event peek() const throw(EmptyDataCollectionException){
 
   if(eventCount <= 0 || eventCount > 100){
-    throw EmptyDataCollectionException("The queue is empty or exceds 100 values");
+    throw EmptyDataCollectionException("The queue is empty or exceeds 100 values");
   }else{
     Event = events[eventCount];
   }
