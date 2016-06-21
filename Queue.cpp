@@ -64,7 +64,13 @@ bool enqueue(const Event& newElement){
 // Time Efficiency: O(1)
 bool dequeue(){
 
-  //Check to see if there are any incoming 
+  if(eventCount < 0){
+    return false;
+  }else{
+    events[eventCount] = 0;
+    eventCount--;
+    currentTime++;
+  }
 
 }// End dequeue
 
@@ -76,6 +82,11 @@ bool dequeue(){
 // Time Efficiency: O(1)
 Event peek() const throw(EmptyDataCollectionException){
 
+  if(eventCount <= 0 || eventCount > 100){
+    throw EmptyDataCollectionException("The queue is empty or exceds 100 values");
+  }else{
+    Event = events[eventCount];
+  }
 } //End event peek
 
   
