@@ -31,7 +31,7 @@ PQueue::PQueue(){
 
 	nodeCount = 0;
 
-	cout << "Past Con";
+	//cout << "Past Con";
 }
 
 //Destructor
@@ -59,6 +59,7 @@ bool PQueue::isEmpty() const
     	return false;
     }
     
+    cout << "Am I stuck here?";
 }
 
 // Description: Inserts newElement in sort order.
@@ -67,14 +68,7 @@ bool PQueue::isEmpty() const
 // Postcondition: Once newElement is inserted, this Priority Queue remains sorted.           
 bool PQueue::enqueue(const Event& newElement)
 {
-    /*
-    Event* event_copy = new Event();
-
-    event_copy->settime(newElement.gettime());
-    event_copy->settype(newElement.gettype());
-    event_copy->setlength(newElement.getlength());
-    */
-    
+       
     Node* prevNode;
     Node* nextNode;
     Node* currentNode;
@@ -84,27 +78,18 @@ bool PQueue::enqueue(const Event& newElement)
 
     Node* newNode = new Node(newElement);
     
+    //cout << "newNode type: " << newNode->data.gettime() << endl;
     
-    
-    //nextNode->next = newNode;
-    //newNode->data = *event_copy;
-    
-    //cout << "event_copy length: " << event_copy->getlength() << endl;
-    
-/*
-    cout << "After newNode" << endl;
-    //nextNode = nextNode->next;
-    cout << newNode->data.gettime() << endl;
-    return true;
-  */  
+   
     int counter = 0;
     	while(nextNode != NULL){
+            //cout << "nextNode time: a " << nextNode->data.gettime() << endl;
             if(nextNode->data.gettime() == newNode->data.gettime()){
                     if(newElement.gettype() < nextNode->data.gettype()){ //therefore an A since A < D in ASCII
                             prevNode->next = newNode; //insert A before nextNode
                             newNode->next = nextNode;
                             nodeCount++;
-                            cout << "Test1" << endl;
+                            //cout << "Test1" << endl;
                             return true;
 
                     }else{
@@ -112,7 +97,7 @@ bool PQueue::enqueue(const Event& newElement)
                             nextNode = nextNode->next;
                             prevNode->next = newNode;
                             nodeCount++;
-                            cout << "Test2" << endl;
+                            //cout << "Test2" << endl;
                             return true;
 
                     }   			    			
@@ -120,25 +105,25 @@ bool PQueue::enqueue(const Event& newElement)
                     prevNode->next = newNode;
                     newNode->next = nextNode;
                     nodeCount++;
-                    cout << "Test4" << endl;
+                    //cout << "Test4" << endl;
                     return true;
 
             }else{
-                cout << "Next node time: " << nextNode->data.gettime() << endl;
-                if(counter != 0){
-                    cout << "Prev node time: " <<  prevNode->data.gettime();
+                //cout << "Next node time: " << nextNode->data.gettime() << endl;
+                if(counter > 0){
+                    //cout << "Prev node time: " <<  prevNode->data.gettime() << endl;
                 }
                 nextNode->next = newNode;
                 newNode->next = nextNode;
                 nodeCount++;
-                cout << "Test5 " << newNode->data.getlength() <<  endl;
+                //cout << "Test5 " << newNode->data.getlength() <<  endl;
                 return true;
             }
             prevNode = nextNode;
             nextNode = nextNode->next;
             counter++;
     	 }                    
-       cout << "Test6" << endl;
+       //cout << "Test6" << endl;
 }
 
 // Description: Removes the element with the "highest" priority.

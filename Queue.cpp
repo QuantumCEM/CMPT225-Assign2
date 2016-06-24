@@ -26,7 +26,7 @@ Queue::Queue()
    
   eventCount = 0;
   numberofDepartures = 0;
-  cout << "Num of Dep " << numberofDepartures << endl;
+  //cout << "Num of Dep " << numberofDepartures << endl;
 } // End default constructor
 /*
 // Destructor

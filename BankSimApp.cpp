@@ -20,138 +20,139 @@
 #include "EmptyDataCollectionException.h"
 
 using namespace std;
-/*
+
 // Processes an arrival event.
-bool processArrival(Event* arrivalEvent, Pqueue priorityQ, Queue qArray)
+bool processArrival(Event* arrivalEvent, PQueue priorityQ, Queue qArray)
 {
-	int departureTime = 0;
+    int departureTime = 0;
     bool tellerAvailable = true;
-    Event* customer = new Event;
+    Event* customer = new Event();
     
     // Remove this event from the event list
-	qArray.dequeue();
+    qArray.dequeue();
 	
-	customer->settime(arrivalEvent->gettime());
-  	customer->settype(arrivalEvent->gettype());
-  	customer->setlength(arrivalEvent->getlength());
+    customer->settime(arrivalEvent->gettime());
+    customer->settype(arrivalEvent->gettype());
+    customer->setlength(arrivalEvent->getlength());
 
-	if (qArray.isEmpty() && tellerAvailable){
-            departureTime = arrivalEvent->gettime() + arrivalEvent->gettime();
-            Event* newDepartureEvent = new Event();
-            newDepartureEvent = new Event('D', departureTime);
-            qArray.enqueue(*newDepartureEvent);
-            tellerAvailable = false;	
-            cout << "Processing an arrival event at time: " << arrivalEvent->gettime() << endl; 
-            return true;
-	}else{
-            qArray.enqueue(*customer);
-	}	
+    if (qArray.isEmpty() && tellerAvailable){
+        departureTime = arrivalEvent->gettime() + arrivalEvent->getlength();
+        Event* newDepartureEvent = new Event();
+        newDepartureEvent = new Event('D', departureTime);
+        qArray.enqueue(*newDepartureEvent);
+        tellerAvailable = false;	
+        cout << "Processing an arrival event at time: " << arrivalEvent->gettime() << endl; 
+        return true;
+    }else{
+        qArray.enqueue(*customer);
+    }	
 }
 
-*/
-/*
 // Processes a departure event .
-bool processDeparture(Event* departureEvent, Queue q, PQueue pq)
+bool processDeparture(Event* departureEvent, PQueue pQueue, Queue queue)
 {
+    bool tellerAvailable;
+    
+    Event *customer = new Event();
+    Event *newDepartureEvent = new Event();
+    
+    int departureTime, currentTime, transactionTime = 0;
+    currentTime = departureEvent->gettime();
+    transactionTime = departureEvent->getlength();
+    
     // Remove this event from the event list
-    eventListPQueue.remove();
-    if (!bankQueue.isEmpty())
+    pQueue.dequeue();
+    if (!queue.isEmpty())
     {
             // Customer at front of line begins transaction
-            customer = bankQueue.peek()
-            bankQueue.dequeue()
-            departureTime = currentTime + transaction time in customer
-            newDepartureEvent = a new departure event with departureTime
-            eventListPQueue.add(newDepartureEvent);
+            *customer = queue.peek();
+            pQueue.dequeue();
+            departureTime = currentTime + transactionTime;
+            newDepartureEvent->settime(departureTime);
+            newDepartureEvent->settype('D');
+            pQueue.enqueue(*newDepartureEvent);
+            tellerAvailable = false;
     }
     else
     {
             tellerAvailable = true;
     }
+    
+    return tellerAvailable;
 }
- */
+ 
 
-/*
 void simulate(){
-	//Create an empty queue bankQueue to represent the bank line
-	Queue* queue = new Queue();
-	PQueue* pqueue = new PQueue();	
-	Event* object = new Event();
+    //Create an empty queue bankQueue to represent the bank line
+    Queue* queue = new Queue();
+    PQueue* pqueue = new PQueue();	
+    Event* object = new Event();
 
-	string aLine;
+    string aLine;
 
-	int newTime, newLength, customerCount = 0;
+    int newTime, newLength, customerCount = 0;
     int currentTime = 0;
-	ifstream myfile ("simulation.in");
+    
+    ifstream myfile ("simulation.in");
 
-	//Create an empty priority queue eventListPQueue for the event list
+    //Create an empty priority queue eventListPQueue for the event list
 
-	bool tellerAvailable = true;
-	
-	// Create and add arrival events to event list
-	if (myfile.is_open()){
-		//while (!eof()) ?? Maybe eof() returns true if file opened reached end
-		while ( getline(myfile, aLine)){ //Could be cin instead of myfile, not sure
-			stringstream ss(aLine);
-			ss >> newTime >> newLength;
-			object->settype('A');
-			object->settime(newTime);
-			object->setlength(newLength);
+    bool tellerAvailable = true;
 
-			cout << "Read: " << object->gettime() << " " << object->getlength() << " " << object->gettype() << endl;
-			customerCount++;
+    // Create and add arrival events to event list
+    if (myfile.is_open()){
+        //while (!eof()) ?? Maybe eof() returns true if file opened reached end
+        while ( getline(myfile, aLine)){ //Could be cin instead of myfile, not sure
+            stringstream ss(aLine);
+            ss >> newTime >> newLength;
+            object->settype('A');
+            object->settime(newTime);
+            object->setlength(newLength);
 
-			//Get next arrival time a and transaction time t from file
-			//newArrivalEvent = a new arrival event containing a and t
-			//eventListPQueue.add(newArrivalEvent);
+            customerCount++;
+
+            //Get next arrival time a and transaction time t from file
+            //newArrivalEvent = a new arrival event containing a and t
+            //eventListPQueue.add(newArrivalEvent);
             pqueue->enqueue(*object);       
-		}
-                
-        //cout << queue->getEventCount() << endl; //Counts number of events on the queue
+        }
+            
+            cout << "Finished reading" << endl;
+        // Event loop
+        while (!pqueue->isEmpty()){
+            cout << "Entering while: ";
+        Event* newEvent = new Event();
+        *newEvent = pqueue->peek();
 
-        
-        //Testing Event.peek()
-        Event* test = new Event;
-        *test = queue->peek();
-        cout << "Time: " << test->gettime() << " Type: " << test->gettype() << " Length: " << test->getlength() << endl;
-      	
+        // Get current time
+        currentTime = newEvent->gettime();
 
-        //int counter = 0;
+        if (newEvent->gettype() == 'A' ){
+            processArrival(newEvent, *pqueue, *queue);
+        }else{
+            processDeparture(newEvent, *pqueue, *queue);
+        }           
+    }
 
-		// Event loop
-		while (!pqueue->isEmpty()) //eventListPQueue is not empty
-		{
-	        Event* newEvent = new Event();
-	        *newEvent = pqueue->peek();
-	        
-	        // Get current time
-	        currentTime = newEvent->gettime();
+    myfile.close();	
 
-	        if (newEvent->gettype() == 'A' ){
-	        	processArrival(newEvent, *pqueue, *queue);
-	        	//counter++;
-	        }else{
-	        	//cout << "departure happened" << endl;
-	        	processDeparture(newEvent, *pqueue, *queue);
-			}           
-		}
-	//cout << "Before myfile close, count: " << counter;
-	myfile.close();	
-
-	}else{
-		//cout << "Unable to open file";
-	} 
+    }else{
+            cout << "Unable to open file";
+    } 
 }
-*/
+
 
 int main()
 {
     cout << "Simulation Begins" << endl;
+    simulate();
+    cout << "Simulation Finished" << endl;
+    
     //Event *trial = new Event('A',10,5);
-
+    /*
     Event* object = new Event();
     object->settype('A');
-    object->settime(10);
+    object->settime(1);
     object->setlength(5);
     
     Event* object1 = new Event();
@@ -163,15 +164,15 @@ int main()
 
     cout << "Before queue" << endl;
     object2->settype('A');
-    object2->settime(10);
+    object2->settime(6);
     object2->setlength(6);
     
     Event* object3 = new Event();
 
     cout << "Before queue" << endl;
     object3->settype('D');
-    object3->settime(11);
-    object3->setlength(6);
+    object3->settime(6);
+    object3->setlength();
     
     PQueue* q = new PQueue();
     Queue* qa = new Queue();
@@ -204,7 +205,7 @@ int main()
         
         cout << q->getNodeCount() << endl;
     //}
-   
+   */
     
 return 0;
 }
