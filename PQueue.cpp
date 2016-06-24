@@ -25,8 +25,9 @@ PQueue::PQueue(){
 	Event* event_data = new Event;
 
 	headPtr = new Node;
+        //headPtr = NULL;
 	headPtr->next = NULL;
-	headPtr = 0;
+	//headPtr = 0;
 
 	nodeCount = 0;
 
