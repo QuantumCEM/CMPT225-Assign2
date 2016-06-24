@@ -1,63 +1,59 @@
-/*
+/* 
+ * File:   PQueue.h
+ * Author: aka91
+ * 
  * PQueue.h (and PQueue.cpp)
  * 
- * Class Description: A data collection ADT class to satisfy Assn 2's requiremetns.
- * Class invariants: FIFO or LILO  
- * Inspired on: June 18, 2016
- * Group: AC Solutions
+ * Class invariants: The elements stored in this Priority Queue are always sorted. 
+ * Group: AC Soluctions
+ *
+ * Created on June 23, 2016, 1:45 PM
  */
 
 #pragma once
 #include <string>
 #include "Event.h"
-#include "PQueue.h"
+#include "Queue.h"
 #include "Node.h"
 
 using namespace std;
 
+class PQueue {
 
-class Queue
-{
-private: 
-   int currentTime;                    
-   int maxNumberofEvents = 100;
-   Event* events[maxNumberofEvents];
-   int eventCount[maxNumberofEvents];
+private:
 
+	int nodeCount;
+
+	Node* headPtr;
+	//Node* nextPtr;
+	//Node* tailPtr;
 
 public:
+	//Default Constructure
+	PQueue();
 
-   Queue();
+	//Destructure
+	~PQueue();
 
-   //Copy Constructor, might not need
-   //Basically just copy assignment 1
-   //Queue(const Queue& rhs);
-
-   //Destructor
-   //Dont need, if not using copy constructor
-   //~Queue();
-
-
-   // Description: Returns "true" is this queue is empty, otherwise "false".
+   // Description: Returns "true" is this Priority Queue is empty, otherwise "false".
    // Time Efficiency: O(1)
    bool isEmpty() const;
-   
-   // Description: Adds newElement to the "back" of this queue and 
-   //              returns "true" if successful, otherwise "false".
-   // Time Efficiency: O(1)
+  
+   // Description: Inserts newElement in sort order.
+   //              It returns "true" if successful, otherwise "false".
+   // Precondition: This Priority Queue is sorted.   
+   // Postcondition: Once newElement is inserted, this Priority Queue remains sorted.           
    bool enqueue(const Event& newElement);
    
-   // Description: Removes the element at the "front" of this queue and 
-   //              returns "true" if successful, otherwise "false".
-   // Precondition: This queue is not empty.
-   // Time Efficiency: O(1)
+   // Description: Removes the element with the "highest" priority.
+   //              It returns "true" if successful, otherwise "false".
+   // Precondition: This Priority Queue is not empty.
    bool dequeue();
 
-   // Description: Retrieves (but does not remove) the element at the  
-   //              "front" of this queue and returns it.
-   // Precondition: This queue is not empty.
-   // Postcondition: This queue is unchanged.
-   // Exceptions: Throws EmptyDataCollectionException if this queue is empty.
-   // Time Efficiency: O(1)
+   // Description: Retrieves (but does not remove) the element with the "highest" priority.
+   // Precondition: This Priority Queue is not empty.
+   // Postcondition: This Priority Queue is unchanged.
+   // Exceptions: Throws EmptyDataCollectionException if this Priority Queue is empty.
    Event peek() const throw(EmptyDataCollectionException);   
+ 
 };

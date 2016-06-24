@@ -10,9 +10,10 @@
  */
 
 #pragma once
+#include <iostream>
 #include <string>
-#include "Queue.h"
-#include "PQueue.h"
+#include "Event.h"
+#include <locale>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ using namespace std;
 // Description: Create an blank event. 
 // Postcondition: type set to "0", time set to 0, length set to 0 
 Event::Event(){
-	type = "0";
+	type = '0';
 	time = 0;
 	length = 0;
 
@@ -30,18 +31,20 @@ Event::Event(){
 // Description: Create an arrive event with preset parameters
 // Postcondition: type set to Atype, time set to Atime, length set to Alength 
 Event::Event(char Atype, int Atime, int Alength){
+        
 	this->settype(Atype);
 	this->settime(Atime);
 	this->setlength(Alength);
+        
 }// End paramatrized arrival constuctor
 
 // Paramatrized departure constuctor
 // Description: Create a departure event with preset parameters
 // Postcondition: type set to Atype, time set to Atime, length set to Alength to zero 
-Event::Event(char Atype, int Atime, int Alength){
-	this->settype(Atype);
+Event::Event(char Atype, int Atime){
+        this->settype(Atype);
 	this->settime(Atime);
-	legnth = 0;
+	length = 0;
 }// End paramatrized departure constuctor
 
 /*
@@ -59,11 +62,12 @@ Event::~Event(){
 void Event::settype(const char Atype){
 
 	if(Atype == 97 || Atype == 98){
-		type = toupper(Atype)
-	}else if(Atype == 65 || Atype == 66){
+		type = toupper(Atype);
+	}
+        else if(Atype == 65 || Atype == 66){
 		type = Atype;
 	}else{
-		type = "0";
+		type = '0';
 	}
 }// End settype implementation
 
@@ -83,10 +87,11 @@ void Event::settime(const int Atime){
 // Precondition: Alength has to be greater than one
 // Postcondition: sets length to Alength, if Alength is realistic, otherwise sets Alength to 1
 void Event::setlength(const int Alength){
-	if(length >= 1){
+	if(Alength >= 1){
 		length = Alength;
 	}else{
 		length = 0;
+                
 	}
 }// End setlength implementation
 
@@ -107,7 +112,8 @@ int Event::gettime() const{
 // Description: Receives the number of execution cycles needed to complete the event
 // Postcondition: Returns required amount of exeqution cycles as an int
 int Event::getlength() const{
-	return lengh;
+        
+	return length;
 }// End getlength implementation
 
 /*

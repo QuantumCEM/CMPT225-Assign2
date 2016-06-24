@@ -11,7 +11,7 @@
 #include <string>
 #include "Event.h"
 #include "PQueue.h"
-#include "Node.h"
+//#include "Node.h"
 
 using namespace std;
 
@@ -19,11 +19,11 @@ using namespace std;
 class Queue
 {
 private: 
-   int currentTime;                    
-   int maxNumberofEvents = 100;
-   int eventCount = 0;
+   int numberofDepartures;                    
+   static const int maxNumberofEvents = 100;
+   int eventCount;
    Event* events[maxNumberofEvents];
-   int eventCount[eventCount];
+   //int eventCount[eventCount];
 
 
 public:
@@ -31,6 +31,8 @@ public:
    // Default Constructor
    Queue();
 
+   //Queue::~Queue();
+  
    // Description: Returns "true" is this queue is empty, otherwise "false".
    // Time Efficiency: O(1)
    bool isEmpty() const;
@@ -52,5 +54,8 @@ public:
    // Postcondition: This queue is unchanged.
    // Exceptions: Throws EmptyDataCollectionException if this queue is empty.
    // Time Efficiency: O(1)
-   Event peek() const throw(EmptyDataCollectionException);   
+   Event peek(); //const throw(EmptyDataCollectionException);   
+   
+   int getEventCount() const;
+  
 };
