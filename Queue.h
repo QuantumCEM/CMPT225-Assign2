@@ -11,6 +11,7 @@
 #include <string>
 #include "Event.h"
 #include "PQueue.h"
+#include "EmptyDataCollectionException.h" 
 //#include "Node.h"
 
 using namespace std;
@@ -54,7 +55,7 @@ public:
    // Postcondition: This queue is unchanged.
    // Exceptions: Throws EmptyDataCollectionException if this queue is empty.
    // Time Efficiency: O(1)
-   Event peek(); //const throw(EmptyDataCollectionException);   
+   Event peek() const throw(EmptyDataCollectionException);   
    
    int getEventCount() const;
   

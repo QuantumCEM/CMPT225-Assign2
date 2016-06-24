@@ -8,7 +8,6 @@
  * Inspired on: June 18, 2016
  * Group: AC Solutions
  */
-
 #pragma once
 #include <iostream>
 #include <string>
@@ -31,7 +30,7 @@ Event::Event(){
 // Description: Create an arrive event with preset parameters
 // Postcondition: type set to Atype, time set to Atime, length set to Alength 
 Event::Event(char Atype, int Atime, int Alength){
-        
+    cout << "test";
 	this->settype(Atype);
 	this->settime(Atime);
 	this->setlength(Alength);

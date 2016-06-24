@@ -26,8 +26,11 @@ PQueue::PQueue(){
 
 	headPtr = new Node;
 	headPtr->next = NULL;
-	headPtr->data = event_data;
-	
+	headPtr = 0;
+
+	nodeCount = 0;
+
+	cout << "Past Con";
 }
 
 //Destructor
@@ -39,7 +42,7 @@ PQueue::~PQueue(){
 	while(ptr != NULL){
 		temp = ptr;
 		ptr = ptr->next;
-		delete temp:
+		delete temp;
 	}
 
 	nodeCount = 0;
@@ -49,7 +52,7 @@ PQueue::~PQueue(){
 // Time Efficiency: O(1)
 bool PQueue::isEmpty() const
 {
-    if(eventCount == 0){
+    if(nodeCount == 0){
     	return true;
     }else{
     	return false;
@@ -63,40 +66,69 @@ bool PQueue::isEmpty() const
 // Postcondition: Once newElement is inserted, this Priority Queue remains sorted.           
 bool PQueue::enqueue(const Event& newElement)
 {
-    Node* temp_prev;
-    Node* temp_next;
-    bool insertedArrival;
-    temp_next = headPtr;
-    temp_prev = NULL;
+	Event* event_copy = new Event();
 
-    if(temp->data.gettype() == 'A' || temp->data.gettype() == 'D'){ //http://www.cprogramming.com/tutorial/lesson15.html
-    	while(temp_next->next != NULL){
-    		if(temp_next->data.gettime() == newElement.gettime()){
-    			if(newElement.gettype() < temp_next->data.gettype(){ //therefore an A since A < D in ASCII
-    				temp_prev->next = Node(newElement, temp_next->next);
-    				insertedArrival = true;
-    			}   			    			
+	event_copy->settime(newElement.gettime());
+	event_copy->settype(newElement.gettype());
+	event_copy->setlength(newElement.getlength());
+
+    Node* prevNode;
+    Node* nextNode;
+    nextNode = headPtr;
+    prevNode = NULL;
+
+    cout << "Before newNode" << endl;
+
+    	Node* newNode = new Node();
+
+    	cout << "after";
+    	nextNode->next = newNode;
+    	nextNode->data = *event_copy;
+    	nextNode->next = NULL;
+
+    	cout << "After newNode" << endl;
+    	//nextNode = nextNode->next;
+    	cout << nextNode->data.gettime() << endl;
+    	return true;
+    
+
+
+
+
+
+    /*
+    if(nextNode->data.gettype() == 'A' || prevNode->data.gettype() == 'D'){ 
+    	while(nextNode->next != NULL){
+    		if(nextNode->data.gettime() == newElement.gettime()){
+    			if(newElement.gettype() < nextNode->data.gettype()){ //therefore an A since A < D in ASCII
+    				prevNode->next = new Node(newElement, nextNode->next); //insert A before nextNode
+    				nodeCount++;
+    				return true;
+     			}else{
+     				prevNode = nextNode->next;
+    				nextNode = nextNode->next;
+    				prevNode->next = new Node(newElement, nextNode->next);
+    				nodeCount++;
+    				return true;
+     			}   			    			
+    		}else if (newElement.gettime() < nextNode->data.gettime()){
+    			prevNode->next = new Node(newElement, nextNode->next);
+    			nodeCount++;
+    			return true; 
     		}else{
-    			temp->next = new Node;
-    			temp = temp->next;
-    			temp->next = NULL;
-    			temp->data = newElement;
-    		}
-    		
-    		temp_prev = temp_next->next;
-    		temp_next = temp_next->next;
-
-    		if(insertedArrival == true){
-    			temp_prev->next = Node(newElement, temp_next->next);
-    			insertedArrival = false;
-
-    		return true;
+    			nextNode->next = new Node(newElement, NULL);
+    			nodeCount++;
+    			return true;
     		}
 
-    	 } 
+    		prevNode = nextNode->next;
+    		nextNode = nextNode->next;
+    	 }
+
     }else{
     	return false;
     }
+    */
 }
 
 // Description: Removes the element with the "highest" priority.
@@ -112,11 +144,15 @@ bool PQueue::dequeue()
     }
 }
 
+int PQueue::getNodeCount() const{
+      return nodeCount;
+}
 // Description: Retrieves (but does not remove) the element with the "highest" priority.
 // Precondition: This Priority Queue is not empty.
 // Postcondition: This Priority Queue is unchanged.
 // Exceptions: Throws EmptyDataCollectionException if this Priority Queue is empty.
 Event PQueue::peek() const throw(EmptyDataCollectionException){
+    
     if(isEmpty()){
     	try{
 			throw EmptyDataCollectionException();
@@ -125,6 +161,6 @@ Event PQueue::peek() const throw(EmptyDataCollectionException){
 			e.what();
 		}
 	}else{
-    	return *headPtr->data;
-    }    
+    	return headPtr->data;
+    }   
 }

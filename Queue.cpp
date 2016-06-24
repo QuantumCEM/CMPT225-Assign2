@@ -105,7 +105,8 @@ int Queue::getEventCount() const{
 // Postcondition: This queue is unchanged.
 // Exceptions: Throws EmptyDataCollectionException if this queue is empty.
 // Time Efficiency: O(1)
-Event Queue::peek() { //const throw(EmptyDataCollectionException){
+
+Event Queue::peek() const throw(EmptyDataCollectionException){
 	
 
   if(isEmpty()){
@@ -121,6 +122,7 @@ Event Queue::peek() { //const throw(EmptyDataCollectionException){
 
     //return Event;
   }
+
 } //End event peek
 
 

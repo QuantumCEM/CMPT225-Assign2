@@ -20,9 +20,9 @@
 #include "EmptyDataCollectionException.h"
 
 using namespace std;
-
+/*
 // Processes an arrival event.
-bool processArrival(Event* arrivalEvent, Queue qArray)
+bool processArrival(Event* arrivalEvent, Pqueue priorityQ, Queue qArray)
 {
 	int departureTime = 0;
     bool tellerAvailable = true;
@@ -48,7 +48,7 @@ bool processArrival(Event* arrivalEvent, Queue qArray)
 	}	
 }
 
-
+*/
 /*
 // Processes a departure event .
 bool processDeparture(Event* departureEvent, Queue q, PQueue pq)
@@ -71,12 +71,15 @@ bool processDeparture(Event* departureEvent, Queue q, PQueue pq)
 }
  */
 
-void simulate()
-{
+/*
+void simulate(){
 	//Create an empty queue bankQueue to represent the bank line
-	Queue* queue = new Queue();	
+	Queue* queue = new Queue();
+	PQueue* pqueue = new PQueue();	
 	Event* object = new Event();
+
 	string aLine;
+
 	int newTime, newLength, customerCount = 0;
     int currentTime = 0;
 	ifstream myfile ("simulation.in");
@@ -101,49 +104,87 @@ void simulate()
 			//Get next arrival time a and transaction time t from file
 			//newArrivalEvent = a new arrival event containing a and t
 			//eventListPQueue.add(newArrivalEvent);
-            queue->enqueue(*object);       
+            pqueue->enqueue(*object);       
 		}
                 
-        cout << queue->getEventCount() << endl; //Counts number of events on the queue
+        //cout << queue->getEventCount() << endl; //Counts number of events on the queue
 
         
         //Testing Event.peek()
         Event* test = new Event;
         *test = queue->peek();
         cout << "Time: " << test->gettime() << " Type: " << test->gettype() << " Length: " << test->getlength() << endl;
-      
-        int counter = 0;
+      	
+
+        //int counter = 0;
 
 		// Event loop
-		while (!queue->isEmpty()) //eventListPQueue is not empty
+		while (!pqueue->isEmpty()) //eventListPQueue is not empty
 		{
 	        Event* newEvent = new Event();
-	        *newEvent = queue->peek();
+	        *newEvent = pqueue->peek();
 	        
 	        // Get current time
 	        currentTime = newEvent->gettime();
 
 	        if (newEvent->gettype() == 'A' ){
-	        	processArrival(newEvent, *queue);
-	        	counter++;
+	        	processArrival(newEvent, *pqueue, *queue);
+	        	//counter++;
 	        }else{
-	        	cout << "departure happened" << endl;
-	        //processDeparture(newEvent, queue);
+	        	//cout << "departure happened" << endl;
+	        	processDeparture(newEvent, *pqueue, *queue);
 			}           
 		}
-	cout << "Before myfile close, count: " << counter;
+	//cout << "Before myfile close, count: " << counter;
 	myfile.close();	
 
 	}else{
-		cout << "Unable to open file";
+		//cout << "Unable to open file";
 	} 
 }
+*/
 
 int main()
 {
     cout << "Simulation Begins" << endl;
-    simulate();
-    cout << "Simulation Finished" << endl;
+    //Event *trial = new Event('A',10,5);
+
+    Event* object = new Event();
+    object->settype('A');
+	object->settime(10);
+	object->setlength(5);
+
+    cout << "Before queue" << endl;
+
+    PQueue* q = new PQueue();
+    Queue* qa = new Queue();
     
+    bool A;
+    //trial = Queue->peek();
+    A = qa->enqueue(*object);
+    int count = qa->getEventCount();
+    cout << count;
+
+     //Testing Event.peek()
+     Event* test = new Event;
+    *test = qa->peek();
+     cout << "Time: " << test->gettime() << " Type: " << test->gettype() << " Length: " << test->getlength() << endl;
+      	
+    cout << object->gettime() << " " << object->getlength() << endl;
+    cout << "Simulation Finished" << endl;
+
+    A = q->enqueue(*object);
 return 0;
 }
+/*
+	Event *trial = new Event('A',10,5);
+    PQueue* q = new PQueue();
+    
+    bool A;
+    //trial = Queue->peek();
+    A = q->enqueue(*trial);
+    int count = q->getNodeCount();
+    cout << count;
+ 
+ cout << "Simulation Finished" << endl;
+*/ 

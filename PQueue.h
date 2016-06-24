@@ -14,6 +14,7 @@
 #include <string>
 #include "Event.h"
 #include "Queue.h"
+#include "EmptyDataCollectionException.h" 
 #include "Node.h"
 
 using namespace std;
@@ -56,4 +57,5 @@ public:
    // Exceptions: Throws EmptyDataCollectionException if this Priority Queue is empty.
    Event peek() const throw(EmptyDataCollectionException);   
  
+   int getNodeCount() const;
 };
