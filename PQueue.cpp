@@ -67,69 +67,78 @@ bool PQueue::isEmpty() const
 // Postcondition: Once newElement is inserted, this Priority Queue remains sorted.           
 bool PQueue::enqueue(const Event& newElement)
 {
-	Event* event_copy = new Event();
+    /*
+    Event* event_copy = new Event();
 
-	event_copy->settime(newElement.gettime());
-	event_copy->settype(newElement.gettype());
-	event_copy->setlength(newElement.getlength());
-
+    event_copy->settime(newElement.gettime());
+    event_copy->settype(newElement.gettype());
+    event_copy->setlength(newElement.getlength());
+    */
+    
     Node* prevNode;
     Node* nextNode;
+    Node* currentNode;
     nextNode = headPtr;
     prevNode = NULL;
+    currentNode = headPtr;
 
-    cout << "Before newNode" << endl;
-
-    	Node* newNode = new Node();
-
-    	cout << "after";
-    	nextNode->next = newNode;
-    	nextNode->data = *event_copy;
-    	nextNode->next = NULL;
-
-    	cout << "After newNode" << endl;
-    	//nextNode = nextNode->next;
-    	cout << nextNode->data.gettime() << endl;
-    	return true;
+    Node* newNode = new Node(newElement);
     
+    
+    
+    //nextNode->next = newNode;
+    //newNode->data = *event_copy;
+    
+    //cout << "event_copy length: " << event_copy->getlength() << endl;
+    
+/*
+    cout << "After newNode" << endl;
+    //nextNode = nextNode->next;
+    cout << newNode->data.gettime() << endl;
+    return true;
+  */  
+    int counter = 0;
+    	while(nextNode != NULL){
+            if(nextNode->data.gettime() == newNode->data.gettime()){
+                    if(newElement.gettype() < nextNode->data.gettype()){ //therefore an A since A < D in ASCII
+                            prevNode->next = newNode; //insert A before nextNode
+                            newNode->next = nextNode;
+                            nodeCount++;
+                            cout << "Test1" << endl;
+                            return true;
 
+                    }else{
+                            prevNode = nextNode->next;
+                            nextNode = nextNode->next;
+                            prevNode->next = newNode;
+                            nodeCount++;
+                            cout << "Test2" << endl;
+                            return true;
 
+                    }   			    			
+            }else if (newElement.gettime() < nextNode->data.gettime()){
+                    prevNode->next = newNode;
+                    newNode->next = nextNode;
+                    nodeCount++;
+                    cout << "Test4" << endl;
+                    return true;
 
-
-
-    /*
-    if(nextNode->data.gettype() == 'A' || prevNode->data.gettype() == 'D'){ 
-    	while(nextNode->next != NULL){
-    		if(nextNode->data.gettime() == newElement.gettime()){
-    			if(newElement.gettype() < nextNode->data.gettype()){ //therefore an A since A < D in ASCII
-    				prevNode->next = new Node(newElement, nextNode->next); //insert A before nextNode
-    				nodeCount++;
-    				return true;
-     			}else{
-     				prevNode = nextNode->next;
-    				nextNode = nextNode->next;
-    				prevNode->next = new Node(newElement, nextNode->next);
-    				nodeCount++;
-    				return true;
-     			}   			    			
-    		}else if (newElement.gettime() < nextNode->data.gettime()){
-    			prevNode->next = new Node(newElement, nextNode->next);
-    			nodeCount++;
-    			return true; 
-    		}else{
-    			nextNode->next = new Node(newElement, NULL);
-    			nodeCount++;
-    			return true;
-    		}
-
-    		prevNode = nextNode->next;
-    		nextNode = nextNode->next;
-    	 }
-
-    }else{
-    	return false;
-    }
-    */
+            }else{
+                cout << "Next node time: " << nextNode->data.gettime() << endl;
+                if(counter != 0){
+                    cout << "Prev node time: " <<  prevNode->data.gettime();
+                }
+                nextNode->next = newNode;
+                newNode->next = nextNode;
+                nodeCount++;
+                cout << "Test5 " << newNode->data.getlength() <<  endl;
+                return true;
+            }
+            prevNode = nextNode;
+            nextNode = nextNode->next;
+            counter++;
+    	 }                    
+       cout << "Test6" << endl;
 }
 
 // Description: Removes the element with the "highest" priority.

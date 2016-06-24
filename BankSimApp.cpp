@@ -151,15 +151,36 @@ int main()
 
     Event* object = new Event();
     object->settype('A');
-	object->settime(10);
-	object->setlength(5);
+    object->settime(10);
+    object->setlength(5);
+    
+    Event* object1 = new Event();
+    object1->settype('A');
+    object1->settime(11);
+    object1->setlength(6);
+
+    Event* object2 = new Event();
 
     cout << "Before queue" << endl;
+    object2->settype('A');
+    object2->settime(10);
+    object2->setlength(6);
+    
+    Event* object3 = new Event();
 
+    cout << "Before queue" << endl;
+    object3->settype('D');
+    object3->settime(11);
+    object3->setlength(6);
+    
     PQueue* q = new PQueue();
     Queue* qa = new Queue();
     
     bool A;
+    bool B;
+    bool C;
+    bool D;
+    
     //trial = Queue->peek();
     A = qa->enqueue(*object);
     int count = qa->getEventCount();
@@ -173,7 +194,18 @@ int main()
     cout << object->gettime() << " " << object->getlength() << endl;
     cout << "Simulation Finished" << endl;
 
-    A = q->enqueue(*object);
+    //for(int i = 0; i<5; i++){
+    //A = q->enqueue(*object);
+    
+        A = q->enqueue(*object);
+        B = q->enqueue(*object1);
+        C = q->enqueue(*object2);
+        D = q->enqueue(*object3);
+        
+        cout << q->getNodeCount() << endl;
+    //}
+   
+    
 return 0;
 }
 /*
